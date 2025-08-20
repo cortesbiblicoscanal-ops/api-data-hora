@@ -1,0 +1,41 @@
+name: Deploy da API
+
+# Define o gatilho para o workflow
+# Ele será executado sempre que houver um 'push' para o branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Define um ou mais "jobs" (tarefas) a serem executados
+jobs:
+  build-and-deploy:
+    # Nome do job, para facilitar a visualização no GitHub
+    name: Construir e Publicar
+    
+    # O sistema operacional onde o job será executado
+    runs-on: ubuntu-latest
+    
+    # As etapas (steps) que o job irá seguir
+    steps:
+      # Etapa 1: Faz o checkout do seu código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      # Etapa 2: Configura o Python
+      - name: Configurar Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9' # Use a versão do Python do seu projeto
+          
+      # Etapa 3: Instala as dependências do seu projeto
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      # Etapa 4: (Aqui você adicionaria o comando de deploy)
+      - name: "Executar o deploy"
+        run: echo "Aqui vai o comando para publicar sua API"
+        
+      # Por exemplo, para o Heroku seria algo como:
+      # - name: Deploy para Heroku
+      #   run: git push heroku HEAD:main
